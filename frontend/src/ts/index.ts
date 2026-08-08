@@ -1,0 +1,1 @@
+window.location.replace("./src/html/SelectCheckList.html");
