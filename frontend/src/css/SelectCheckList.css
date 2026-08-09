@@ -1,0 +1,489 @@
+/* ========================================
+   全体
+======================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-width: 900px;
+
+  background-color: #f7f7f7;
+
+  color: #222;
+
+  font-family:
+    "Noto Sans JP",
+    "Yu Gothic",
+    "Hiragino Kaku Gothic ProN",
+    Meiryo,
+    sans-serif;
+}
+
+
+/* ========================================
+   ページ全体
+======================================== */
+
+.check-list-page {
+  position: relative;
+
+  min-height: 100vh;
+
+  padding-top: 1px;
+}
+
+
+/* ========================================
+   タイトル
+======================================== */
+
+.page-title {
+  margin: 60px 0 60px 75px;
+
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+
+/* ========================================
+   右上の操作ボタン
+======================================== */
+
+.action-button-area {
+  position: absolute;
+
+  top: 45px;
+  right: 40px;
+
+  display: flex;
+  gap: 28px;
+}
+
+
+/* 操作ボタン共通 */
+
+.action-button {
+  width: 91px;
+  height: 61px;
+
+  padding: 0;
+
+  background-color: #ffffff;
+
+  border: 1px solid #222222;
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 400;
+
+  cursor: pointer;
+}
+
+
+/* マウスを乗せたとき */
+
+.action-button:hover {
+  background-color: #f0f0f0;
+}
+
+
+/* ========================================
+   チェックリスト一覧
+======================================== */
+
+.check-list-table {
+  width: calc(100% - 80px);
+
+  margin: 0 40px;
+}
+
+
+/* ========================================
+   テーブルヘッダー
+   検索 + ページング
+======================================== */
+
+.table-header {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  height: 91px;
+
+  padding: 0 30px;
+
+  background-color: #dce9fc;
+
+  border: 1px solid #7ea3dc;
+}
+
+
+/* ========================================
+   検索エリア
+======================================== */
+
+.search-area {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+}
+
+
+/* 検索入力 */
+
+.search-input {
+  width: 231px;
+  height: 61px;
+
+  padding: 0 20px;
+
+  background-color: #ffffff;
+
+  border: 1px solid #222222;
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-size: 18px;
+
+  outline: none;
+}
+
+
+/* プレースホルダー */
+
+.search-input::placeholder {
+  color: #c8c8c8;
+}
+
+
+/* フォーカス時 */
+
+.search-input:focus {
+  border-color: #5b8fd8;
+}
+
+
+/* 検索ボタン */
+
+.search-button {
+  width: 91px;
+  height: 61px;
+
+  padding: 0;
+
+  background-color: #ffffff;
+
+  border: 1px solid #222222;
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-size: 18px;
+
+  cursor: pointer;
+}
+
+
+/* 検索ボタン hover */
+
+.search-button:hover {
+  background-color: #f0f0f0;
+}
+
+
+/* ========================================
+   ページング
+======================================== */
+
+.pagination-area {
+  display: flex;
+  align-items: center;
+
+  margin-left: auto;
+}
+
+
+/* ページ番号 */
+
+.page-number {
+  margin-right: 25px;
+
+  font-size: 18px;
+
+  white-space: nowrap;
+}
+
+
+/* ページ移動ボタン */
+
+.pagination-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 31px;
+  height: 31px;
+
+  padding: 0;
+
+  background-color: #ffffff;
+
+  border: 1px solid #222222;
+  border-radius: 6px;
+
+  font-family: inherit;
+  font-size: 18px;
+
+  cursor: pointer;
+}
+
+
+/* 1つ目のページングボタン */
+
+.pagination-button:first-of-type {
+  margin-right: 19px;
+}
+
+
+/* hover */
+
+.pagination-button:hover {
+  background-color: #f0f0f0;
+}
+
+
+/* ========================================
+   テーブル
+======================================== */
+
+.table-area {
+  width: 100%;
+}
+
+
+.check-list {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  table-layout: fixed;
+
+  background-color: #ffffff;
+}
+
+
+/* ========================================
+   テーブル行
+======================================== */
+
+.check-list-row {
+  height: 52px;
+}
+
+
+/* ========================================
+   テーブルセル
+======================================== */
+
+.check-list-row td {
+  height: 52px;
+
+  padding: 0;
+
+  border: 1px solid #222222;
+
+  vertical-align: middle;
+}
+
+
+/* ========================================
+   チェックボックス列
+======================================== */
+
+.check-box-cell {
+  width: 70px;
+
+  text-align: center;
+}
+
+
+/* ========================================
+   チェックリスト名
+======================================== */
+
+.check-list-name {
+  text-align: center;
+
+  font-size: 20px;
+  font-weight: 400;
+}
+
+
+/* ========================================
+   チェックボックス
+======================================== */
+
+.check-list-checkbox {
+  appearance: none;
+
+  width: 31px;
+  height: 31px;
+
+  margin: 0;
+
+  background-color: #ffffff;
+
+  border: 1px solid #222222;
+
+  cursor: pointer;
+
+  vertical-align: middle;
+}
+
+
+/* チェックされた状態 */
+
+.check-list-checkbox:checked {
+  position: relative;
+}
+
+
+/* チェックマーク */
+
+.check-list-checkbox:checked::after {
+  content: "";
+
+  position: absolute;
+
+  top: 4px;
+  left: 9px;
+
+  width: 8px;
+  height: 16px;
+
+  border-right: 2px solid #222222;
+  border-bottom: 2px solid #222222;
+
+  transform: rotate(45deg);
+}
+
+
+/* ========================================
+   フォーカス
+======================================== */
+
+.action-button:focus-visible,
+.search-button:focus-visible,
+.pagination-button:focus-visible,
+.search-input:focus-visible,
+.check-list-checkbox:focus-visible {
+  outline: 2px solid #5b8fd8;
+
+  outline-offset: 2px;
+}
+
+
+/* ========================================
+   スマートフォン対応
+======================================== */
+
+@media (max-width: 700px) {
+
+  body {
+    min-width: 0;
+  }
+
+
+  /* タイトル */
+
+  .page-title {
+    margin: 30px 20px;
+
+    font-size: 20px;
+  }
+
+
+  /* 操作ボタン */
+
+  .action-button-area {
+    position: static;
+
+    justify-content: flex-end;
+
+    margin: 0 20px 30px;
+
+    gap: 10px;
+  }
+
+
+  .action-button {
+    width: 80px;
+    height: 50px;
+
+    font-size: 16px;
+  }
+
+
+  /* 一覧 */
+
+  .check-list-table {
+    width: calc(100% - 40px);
+
+    margin: 0 20px;
+  }
+
+
+  /* ヘッダー */
+
+  .table-header {
+    height: auto;
+
+    min-height: 90px;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    padding: 15px;
+  }
+
+
+  /* 検索 */
+
+  .search-input {
+    width: calc(100% - 90px);
+
+    height: 50px;
+  }
+
+
+  .search-button {
+    width: 80px;
+    height: 50px;
+  }
+
+
+  /* ページング */
+
+  .pagination-area {
+    margin-left: auto;
+  }
+
+
+  /* 項目 */
+
+  .check-list-name {
+    font-size: 16px;
+  }
+
+}
