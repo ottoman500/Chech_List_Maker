@@ -1,7 +1,131 @@
 <!DOCTYPE html>
+<html lang="ja">
 <head>
-    <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>チェックリスト</title>
+  <link rel="stylesheet" href="../css/CheckList.css">
 </head>
 <body>
-    <script src="../ts/CheckList.ts"></script>
+
+  <div class="checklist-page">
+
+    <!-- ヘッダー -->
+    <header class="checklist-header">
+
+      <h1 class="checklist-title">チェックリスト</h1>
+
+      <div class="progress-area">
+        <div class="progress-label">進捗率</div>
+        <div class="progress-value">20%</div>
+      </div>
+
+      <div class="header-actions">
+        <button class="header-button back-button" type="button">
+          一覧に戻る
+        </button>
+
+        <button class="header-button edit-button" type="button">
+          編集
+        </button>
+      </div>
+
+    </header>
+
+    <!-- チェックリスト -->
+    <main class="checklist-container">
+
+      <div class="checklist-item is-completed">
+        <div class="checkbox-area">
+          <input type="checkbox" id="item1" class="check-box">
+          <label for="item1" class="check-box-label"></label>
+        </div>
+        <div class="item-name">項目1</div>
+      </div>
+
+      <div class="checklist-item is-completed">
+        <div class="checkbox-area">
+          <input type="checkbox" id="item2" class="check-box">
+          <label for="item2" class="check-box-label"></label>
+        </div>
+        <div class="item-name">項目2</div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="checkbox-area">
+          <input type="checkbox" id="item3" class="check-box">
+          <label for="item3" class="check-box-label"></label>
+        </div>
+        <div class="item-name">項目3</div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="checkbox-area">
+          <input type="checkbox" id="item4" class="check-box">
+          <label for="item4" class="check-box-label"></label>
+        </div>
+        <div class="item-name">項目4</div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="checkbox-area">
+          <input type="checkbox" id="item5" class="check-box">
+          <label for="item5" class="check-box-label"></label>
+        </div>
+        <div class="item-name">項目5</div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="checkbox-area">
+          <input type="checkbox" id="item6" class="check-box">
+          <label for="item6" class="check-box-label"></label>
+        </div>
+        <div class="item-name">項目6</div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="checkbox-area">
+          <input type="checkbox" id="item7" class="check-box">
+          <label for="item7" class="check-box-label"></label>
+        </div>
+        <div class="item-name">項目7</div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="checkbox-area">
+          <input type="checkbox" id="item8" class="check-box">
+          <label for="item8" class="check-box-label"></label>
+        </div>
+        <div class="item-name">項目8</div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="checkbox-area">
+          <input type="checkbox" id="item9" class="check-box">
+          <label for="item9" class="check-box-label"></label>
+        </div>
+        <div class="item-name">項目9</div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="checkbox-area">
+          <input type="checkbox" id="item10" class="check-box">
+          <label for="item10" class="check-box-label"></label>
+        </div>
+        <div class="item-name">項目10</div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="checkbox-area">
+          <input type="checkbox" id="item11" class="check-box">
+          <label for="item11" class="check-box-label"></label>
+        </div>
+        <div class="item-name">項目11</div>
+      </div>
+
+    </main>
+
+  </div>
+
 </body>
+</html>
