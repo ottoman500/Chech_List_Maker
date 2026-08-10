@@ -121,17 +121,18 @@ body {
 
   font-family: inherit;
   font-size: 19px;
-  font-weight: 700;
 
   cursor: pointer;
 }
 
 .header-button:hover {
   background-color: #f2f2f2;
+  opacity: 0.8;
 }
 
 .header-button:active {
   background-color: #e8e8e8;
+  transform: translateY(1px);
 }
 
 
@@ -161,15 +162,11 @@ body {
   border-bottom: 1px solid #111;
 
   background-color: #fff;
+  cursor: pointer;
 }
 
-
-/*
-  画像では1・2行目が青色になっているため、
-  is-completed を付けた項目を青色にする
-*/
-
-.checklist-item.is-completed {
+/* 内部にチェックされたcheckboxが存在する場合、親要素(.checklist-item)の背景色を青にする */
+.checklist-item:has(.check-box:checked) {
   background-color: #d9e6fb;
 }
 
@@ -216,8 +213,6 @@ body {
   border: 1px solid #111;
 
   background-color: #fff;
-
-  cursor: pointer;
 }
 
 
@@ -264,7 +259,6 @@ body {
   height: 100%;
 
   font-size: 20px;
-  font-weight: 400;
 
   text-align: center;
 }
