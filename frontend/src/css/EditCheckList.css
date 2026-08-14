@@ -195,12 +195,21 @@ body {
 ========================= */
 
 .checklist-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
   height: 100%;
+  padding: 0 16px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
   font-size: 19px;
-  line-height: 1;
+  color: inherit;
+  text-align: center;
+  outline: none;
+}
+
+/* 入力欄にフォーカスが当たった時のスタイル */
+.checklist-item:focus {
+  background-color: #f0f7ff;
 }
 
 
