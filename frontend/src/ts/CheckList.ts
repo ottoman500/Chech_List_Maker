@@ -1,89 +1,78 @@
-type CheckListDetail = {
-    selected_check_list_id: number,
-    check_list_name: string,
-    check_list_info: string[]
+type CheckListData = {
+  check_list_id: string,
+  check_list_name: string,
+  check_list: string
 }
 
-// 進捗率の計算のための配列
-let inputArray: HTMLInputElement[] = [];
+const checkListInfo: CheckListData = {
+    check_list_id: "CH00000",
+    check_list_name: "買い物リスト",
+    check_list: JSON.stringify(["牛乳", "卵", "パン", "コーヒー豆"])
+}
 
-window.addEventListener('load', ()=>{
-    GetCheckListDetail();
+window.addEventListener('load', async() =>{
+    // // セッションストレージからチェックリストIDを取得してAPIから情報を取得する
+    // let checkListId:string = sessionStorage.getItem('ListId')!;
+    // const response = await fetch('http://localhost:8080/api/CheckListInfo', {
+    //     method:'GET',
+    //     headers:{
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body:JSON.stringify({id:checkListId})
+    // })
 
-    let backSelectButton: HTMLButtonElement = document.querySelector('back-button') as HTMLButtonElement;
-    backSelectButton.addEventListener('click', ()=>{
-        location.replace('./SelectCheckList.html')
-    })
-
-    let editButton: HTMLButtonElement = document.querySelector('edit-button') as HTMLButtonElement;
-    editButton.addEventListener('click', ()=>{
-        location.replace('./EditCheckList.html')
-    })
+    // if(response.ok){
+         makeCheckList();
+         makeButton();
+    // }
 })
 
-let GetCheckListDetail = async() =>{
-    let checkListId = window.localStorage.getitem('checkListId');
+let makeCheckList = () =>{
+    // チェックリスト情報を取得
+    // let checkListInfo = response.json();
+    let checkList:string[] = JSON.parse(checkListInfo.check_list) as string[];
 
-    if(checkListId != null){
-        try{
-            let response = await fetch("http://localhost:8080/api/CheckListDetail");
+    // チェックリストを作成する
+    let bodyElement:HTMLBodyElement = document.body as HTMLBodyElement;
+    let checkListView: HTMLDivElement = document.createElement('div') as HTMLDivElement;
+    let list: HTMLUListElement = document.createElement('ul') as HTMLUListElement;
+    list.classList.add('check_list')
 
-            if(response.ok){
-                let checkListDetai: CheckListDetail = await response.json();
-                ShowCheckList(checkListDetai);
-            }
-            else{
-                alert("チェックリストの取得に失敗しました");
-            }
-        }catch{
-            alert("チェックリストの取得に失敗しました");
-        }
-    }
+    checkList.forEach(element =>{
+        let checkElement:HTMLInputElement = document.createElement('input') as HTMLInputElement;
+        let checkLabel: HTMLLabelElement = document.createElement('label') as HTMLLabelElement;
+        let listElement: HTMLLIElement = document.createElement('li') as HTMLLIElement;
+
+        checkElement.type = 'checkbox';
+        checkElement.id = element;
+
+        checkLabel.textContent = element as string;
+        checkLabel.htmlFor = element as string;
+
+        listElement.appendChild(checkElement);
+        listElement.appendChild(checkLabel);
+
+        list.appendChild(listElement);
+    })
+    checkListView.appendChild(list);
+    bodyElement.appendChild(checkListView);
 }
 
-let ShowCheckList = (checkListDetail: CheckListDetail) =>{
-    let itemCount: number = 0;
+let makeButton = () =>{
+    let backPageButton = document.createElement('button') as HTMLButtonElement;
+    let editPageButton = document.createElement('button') as HTMLButtonElement;
 
-    checkListDetail.check_list_info.forEach(element =>{
-        itemCount++;
-
-        let checkListItem: HTMLLabelElement = document.createElement('label') as HTMLLabelElement;
-        checkListItem.classList.add('checklist-item');
-
-        let checkBoxArea: HTMLDivElement = document.createElement('div') as HTMLDivElement;
-        checkBoxArea.classList.add('checkbox-area');
-
-        let checkBox: HTMLInputElement = document.createElement('input') as HTMLInputElement;
-        checkBox.type = "checkbox";
-        checkBox.id = "item" + itemCount;
-        checkBox.classList.add('check-box');
-        inputArray.push(checkBox);
-        checkBox.addEventListener('change', ()=>{
-            let checkedCount: number = 0;
-
-            inputArray.forEach(element => {
-                if(element.checked == true){
-                    checkedCount++;
-                }
-            })
-
-            let progressValue: HTMLDivElement = document.querySelector('progress-value') as HTMLDivElement;
-            progressValue.textContent = (checkedCount / inputArray.length) + '%';
-        })
-
-        let checkBoxLabel: HTMLSpanElement = document.createElement('span') as HTMLSpanElement;
-        checkBoxLabel.classList.add('item-name');
-
-        let itemName: HTMLSpanElement = document.createElement('span') as HTMLSpanElement;
-        itemName.classList.add('item-name');
-
-        checkBoxArea.appendChild(checkBox);
-        checkBoxArea.appendChild(checkBoxLabel);
-        checkListItem.appendChild(checkBoxArea);
-        checkListItem.appendChild(itemName);
-
-        let checkListContainer: HTMLElement = document.querySelector('checklist-container') as HTMLElement;
-
-        checkListContainer.appendChild(checkListItem);
+    backPageButton.addEventListener('click', ()=>{
+        window.location.replace('./SelectCheckList.html')
     })
+    backPageButton.textContent = '戻る'
+
+    editPageButton.addEventListener('click', ()=>{
+        window.location.replace('./EditCheckList.html')
+    })
+    editPageButton.textContent = '編集'
+
+    let bodyElement:HTMLBodyElement = document.body as HTMLBodyElement;
+    bodyElement.appendChild(backPageButton);
+    bodyElement.appendChild(editPageButton)
 }
