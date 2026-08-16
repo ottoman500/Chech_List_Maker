@@ -1,0 +1,264 @@
+/* =========================
+   全体
+========================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  background-color: #f5f5f5;
+  color: #111;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Noto Sans JP",
+    "Yu Gothic",
+    "Meiryo",
+    sans-serif;
+}
+
+
+/* =========================
+   ページ全体
+========================= */
+
+.checklist-page {
+  width: 100%;
+  min-height: 100vh;
+  border: 1px solid #888;
+  background-color: #f7f7f7;
+}
+
+
+/* =========================
+   ヘッダー
+========================= */
+
+.checklist-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 109px;
+  padding: 0 74px;
+}
+
+.checklist-title {
+  position: absolute;
+  left: 36px;
+  width: 180px;
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+
+/* =========================
+   ヘッダーボタン
+========================= */
+
+.header-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 144px;
+}
+
+.header-button {
+  width: 121px;
+  height: 61px;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 19px;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.header-button-add {
+  border: 1px solid #5b8fdc;
+  background-color: #dbe9ff;
+}
+
+.header-button-add:hover {
+  background-color: #bcdcff;
+}
+
+.header-button-delete {
+  border: 1px solid #e16b6b;
+  background-color: #ffd1d1;
+}
+
+.header-button-delete:hover {
+  background-color: #ffb3b3;
+}
+
+
+/* =========================
+   フッター
+========================= */
+
+.checklist-footer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 109px;
+  padding: 0 74px;
+}
+
+
+/* =========================
+   フッターボタン
+========================= */
+
+.footer-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 144px;
+}
+
+.footer-button {
+  width: 121px;
+  height: 61px;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 19px;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.footer-button-save {
+  border: 1px solid #111;
+  background-color: #fff;
+}
+
+.footer-button-save:hover {
+  background-color: #f2f2f2;
+}
+
+.footer-button-back {
+  border: 1px solid #111;
+  background-color: #fff;
+}
+
+.footer-button-back:hover {
+  background-color: #f2f2f2;
+}
+
+
+/* =========================
+   メイン
+========================= */
+
+.checklist-main {
+  width: 100%;
+  padding: 0 74px 29px 74px;
+}
+
+.checklist-table {
+  width: 100%;
+  border: 1px solid #111;
+  background-color: #fff;
+}
+
+
+/* =========================
+   チェックリスト行
+========================= */
+
+.checklist-row {
+  display: block;
+  width: 100%;
+  height: 60px;
+  border-bottom: 1px solid #111;
+}
+
+.checklist-row:last-child {
+  border-bottom: none;
+}
+
+
+/* =========================
+   項目テキスト
+========================= */
+
+.checklist-item {
+  width: 100%;
+  height: 100%;
+  padding: 0 16px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 19px;
+  color: inherit;
+  text-align: center;
+  outline: none;
+}
+
+/* 入力欄にフォーカスが当たった時のスタイル */
+.checklist-item:focus {
+  background-color: #f0f7ff;
+}
+
+
+/* =========================
+   ボタンのアクティブ
+========================= */
+
+.header-button:active,
+.footer-button:active {
+  transform: translateY(1px);
+}
+
+
+/* =========================
+   画面幅が狭い場合（レスポンシブ）
+========================= */
+
+@media screen and (max-width: 800px) {
+
+  .checklist-header {
+    height: auto;
+    min-height: 180px;
+    padding: 25px;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .checklist-title {
+    position: static;
+    width: auto;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .header-buttons {
+    gap: 20px;
+  }
+
+  .checklist-footer {
+    height: auto;
+    min-height: 120px;
+    padding: 25px;
+  }
+
+  .footer-buttons {
+    gap: 20px;
+  }
+
+  .checklist-main {
+    padding: 0 25px 25px;
+  }
+}
