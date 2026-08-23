@@ -4,27 +4,9 @@ type CheckListName = {
     check_list_name : string;
 }
 
-// テストデータ
-let testData: CheckListName[] = [
-    {
-        check_list_id:1,
-        check_list_name:"チェックリスト1"
-    },
-    {
-        check_list_id:2,
-        check_list_name:"チェックリスト2"
-    },
-    {
-        check_list_id:3,
-        check_list_name:"チェックリスト3"
-    },
-]
-
 // 削除対象のチェックリスト
-let selectedDeleteCheckList: number[] = [];
-
-// チェックリスト一覧
-let getListName:CheckListName[] = testData;
+let selectedDeleteCheckListId: number[] = [];
+let selectedDeleteCheckList: HTMLInputElement[] = [];
 
 // 現在のページ数
 let nowPageNumber: number = 1;
@@ -33,10 +15,13 @@ let nowPageNumber: number = 1;
 let searchString: string = "";
 
 // 選択されたチェックリストの削除を行う
-let DeleteMultiCHeckList = async(selectedList: number[]) =>{
+let DeleteMultiCheckList = async(selectedList: number[]) =>{
     try{
         const response = await fetch("http://localhost:8080/api/DeleteSelectedList", {
             method:"DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
             body:JSON.stringify({list:selectedList})
         });
         if(!response.ok){
@@ -44,6 +29,9 @@ let DeleteMultiCHeckList = async(selectedList: number[]) =>{
         }
         else{
             alert("削除に成功しました")
+            nowPageNumber = 0;
+            searchString = "";
+            GetCheckList(nowPageNumber, searchString);
         }
     }
     catch(error){
@@ -55,26 +43,30 @@ let DeleteMultiCHeckList = async(selectedList: number[]) =>{
 // 一覧取得をする
 let GetCheckList = async(pageNumber: number, searchString: string) =>{
     try{
-        const response = await fetch("http://localhost:8080/api/GetCheckList", {
-            method:"GET",
-            body:JSON.stringify({page: pageNumber, keyWord: searchString})
+        var params = new URLSearchParams({
+            page_number: pageNumber.toString(),
+            search_string: searchString
+        }).toString();
+
+        const response = await fetch(`http://localhost:8080/api/GetCheckList?${params}`, {
+            method:"GET"
         })
         if(!response.ok){
             alert("一覧の取得に失敗しました")
         }
         else{
-            getListName = await response.json();
+            var getListName = await response.json();
             ShowCheckList(getListName);
         }
     }catch(error){
-        alert("一覧の取得に失敗しました");
-        console.log(error);
+        console.log(error);      
     }
 }
 
 // チェックリスト一覧を表示する
 let ShowCheckList = (checkListName: CheckListName[]) =>{
-        const tableBody = document.querySelector('tbody') as HTMLTableSectionElement;
+        let tableBody = document.querySelector('tbody') as HTMLTableSectionElement;
+        tableBody.replaceChildren();
 
         checkListName.forEach(element =>{
         let tableLine: HTMLTableRowElement = document.createElement('tr') as HTMLTableRowElement;
@@ -91,12 +83,35 @@ let ShowCheckList = (checkListName: CheckListName[]) =>{
         checkCell.type = "checkbox";
         checkCell.dataset.listId = element.check_list_id.toString();
         checkCell.addEventListener('input', ()=>{
-            selectedDeleteCheckList.push(Number(checkCell.dataset.listId))
+            for(let index = 0; index < selectedDeleteCheckList.length; index++){
+                let deleteCheckListButton: HTMLButtonElement = document.querySelector('.action-button--delete') as HTMLButtonElement;
+                if(selectedDeleteCheckList[index].checked){
+                    selectedDeleteCheckListId.length = 0;
+                    selectedDeleteCheckList.forEach(item =>{
+                        if(item.checked){
+                            selectedDeleteCheckListId.push(Number(item.dataset.listId));
+                        }
+                    })
+                    deleteCheckListButton.disabled = false;
+                    console.log(selectedDeleteCheckListId);
+                    break;
+                }
+                else{
+                    selectedDeleteCheckListId.length = 0;
+                    deleteCheckListButton.disabled = true;
+                }
+            }
         });
+        selectedDeleteCheckList.push(checkCell);
 
         let nameButton: HTMLButtonElement = document.createElement('button') as HTMLButtonElement;
         nameButton.type = 'button';
+        nameButton.textContent = element.check_list_name;
         nameButton.classList.add('check-list-item-button');
+        nameButton.addEventListener('click', ()=>{
+            window.localStorage.setItem('checkListId', element.check_list_id.toString());
+            location.replace("./CheckList.html");
+        })
 
         tableDataAsName.appendChild(nameButton);
         tableDataAsCheck.appendChild(checkCell);
@@ -119,20 +134,28 @@ window.addEventListener('load', async()=>{
     // 削除ボタンのイベント設定を行う
     let deleteCheckListButton: HTMLButtonElement = document.querySelector('.action-button--delete') as HTMLButtonElement;
     deleteCheckListButton.addEventListener('click', async() => {
-        await DeleteMultiCHeckList(selectedDeleteCheckList);
+        await DeleteMultiCheckList(selectedDeleteCheckListId);
     })
 
     // ページングをするボタンの設定を行う
     let upPageButton: HTMLButtonElement = document.querySelector('.up-page') as HTMLButtonElement;
+    let downPageButton: HTMLButtonElement = document.querySelector('.down-page') as HTMLButtonElement;
+    downPageButton.disabled = true;
+    
     upPageButton.addEventListener('click', async()=>{
         nowPageNumber++;
+        if(nowPageNumber > 1){
+            downPageButton.disabled = false;
+        }
         await GetCheckList(nowPageNumber, searchString);
     })
 
     // ページングをするボタンの設定を行う
-    let downPageButton: HTMLButtonElement = document.querySelector('.down-page') as HTMLButtonElement;
     downPageButton.addEventListener('click', async()=>{
         nowPageNumber--;
+        if(nowPageNumber == 1){
+            downPageButton.disabled = true;
+        }
         await GetCheckList(nowPageNumber, searchString);
     })
 

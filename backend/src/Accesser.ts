@@ -5,25 +5,47 @@ const { Pool } = require('pg');
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
-  database: 'testdb',
-  password: 'password',
+  database: 'postgres',
+  password: 'postgresql',
   port: 5432,
 });
 
-export let GetCheckListAccesser = async(pageNumber: number): Promise<CheckList[]> =>{
-    let query: string = 'select check_list_name, check_list_info from CheckListTable';
-    let getData: CheckList[] = [];
+export let GetCheckListAccesser = async(pageNumber: number, searchString: string): Promise<CheckList[]> =>{
+    let query: string = "";
+    let checkListData: CheckList[] = [];
+
+    if(searchString == ""){
+        query = 'select id, name from check_list_table order by id';
+    }
+    else {
+        query = `select id, name from check_list_table where name like '%${searchString}%' order by id;`;
+    }
+
     try{
-        getData = await Pool.query(query);
+        var getListData = await pool.query(query);
+        let count: number = 0;
+        console.log(getListData.rows.length)
+        if((pageNumber * 10) < getListData.rows.lngth){
+            for(let index = (pageNumber - 1) * 10; index < getListData.rows.length; index++){
+                count++;
+                checkListData.push({
+                    check_list_id:getListData.rows[index].id,
+                    check_list_name:getListData.rows[index].name
+                })
+                if(count == 10 || count == (getListData.length - (pageNumber * 10))){
+                    break;
+                }
+            }
+        }
     }
-    catch{
-        console.log("データの取得に失敗しました");
+    catch(error){
+        console.log(error);
     }
-    return  getData;
+    return  checkListData;
 }
 
 export let GetSelectedCheckListAccesser = async(checkListNumber: number): Promise<SelectedCheckList> =>{
-    let query: string = `select * from CheckListTable where id = '${checkListNumber}`;
+    let query: string = `select * from check_list_table where id = ${checkListNumber}`;
     let getData: SelectedCheckList = {
         selected_check_list_id: 0,
         check_list_name: "",
@@ -31,10 +53,17 @@ export let GetSelectedCheckListAccesser = async(checkListNumber: number): Promis
     }
 
     try{
-        getData = await Pool.query(query);
+        const result = await pool.query(query);
+        console.log(result);
+        getData = {
+            selected_check_list_id: result.rows[0].id,
+            check_list_name: result.rows[0].name,
+            check_list_info: result.rows[0].check_list_info.split(",")
+        }
     }
-    catch{
-        console.log("データの取得に失敗しまいた");
+    catch(error){
+        console.log("データの取得に失敗しました");
+        console.log(error)
     }
     return getData;
 }
@@ -58,7 +87,7 @@ export let RegisterCheckListAccesser = async(checkList: SelectedCheckList) =>{
 
 export let DeleteCheckListAccesser = async(checkListNumber: number) =>{
     try{
-        let query: string = `delete CheckList where id = '${checkListNumber}'`;
+        let query: string = `delete from check_list_table where id in (${checkListNumber})`;
         pool.query(query);
     }
     catch{

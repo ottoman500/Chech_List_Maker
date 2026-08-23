@@ -1,14 +1,14 @@
 import type {CheckList, SelectedCheckList} from './type'
 import {GetCheckListAccesser, GetSelectedCheckListAccesser, RegisterCheckListAccesser, DeleteCheckListAccesser} from './Accesser'
 
-export let GetCheckList = async(pageNumber: number): Promise<CheckList[]> =>{
-    let checkList: CheckList[] = [];
+export let GetCheckList = async(pageNumber: number, searchString: string): Promise<CheckList[]> =>{
+    let getListData: CheckList[] = [];
     try{
-        checkList = await GetCheckListAccesser(pageNumber);
+        getListData = await GetCheckListAccesser(pageNumber, searchString);
     }catch{
         console.log("一覧の取得に失敗しました");
     }
-    return checkList;
+    return getListData;
 }
 
 export let GetSelectedCheckList = async(checkListNumber: number): Promise<SelectedCheckList> =>{

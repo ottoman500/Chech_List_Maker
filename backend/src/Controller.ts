@@ -1,30 +1,33 @@
 import express from 'express';
 import type { CheckList, SelectedCheckList } from './type';
 import {GetCheckList, GetSelectedCheckList, RegisterCheckList, DeleteCheckList} from './Service'
+import cors from 'cors';
 const app = express();
 const port = 8080;
+app.use(cors());
 
 app.use(express.json());
 
-app.get('/Checkist', async(req, res) => {
-    let pageNumber: number = Number(req.body.page_number);
-    let responseData: CheckList[] = await GetCheckList(pageNumber);
+app.get('/api/GetCheckList', async(req, res) => {
+    let pageNumber: number = Number(req.query.page_number);
+    let searchString: string= typeof req.query.search_string === 'string' ? req.query.search_string : "";
+    let responseData: CheckList[] = await GetCheckList(pageNumber, searchString);
     res.json(responseData);
 });
 
-app.get('/SelectedCheckList', async(req, res) => {
-    let checkListNumber: number = Number(req.body.check_list_id);
+app.get('/api/SelectedCheckList', async(req, res) => {
+    let checkListNumber: number = Number(req.query.check_list_id);
     let responseData: SelectedCheckList = await GetSelectedCheckList(checkListNumber);
     res.json(responseData);
 })
 
-app.post('/NewCheckList', async(req, res) => {
+app.post('/api/RegisterCheckListDetail', async(req, res) => {
     let checkListDetail: SelectedCheckList = req.body;
     await RegisterCheckList(checkListDetail);
 })
 
-app.delete('/UnNecessaryCheckList', async(req, res)=>{
-    let checkListNumber: number = Number(req.body.check_list_number);
+app.delete('/api/DeleteSelectedList', async(req, res)=>{
+    let checkListNumber: number = req.body.list;
     await DeleteCheckList(checkListNumber);
 })
 
